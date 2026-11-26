@@ -67,8 +67,7 @@ class TestRoutes(BaselineTestCase):
 
 
 class TestKnownBugs(BaselineTestCase):
-    @unittest.expectedFailure  # D1 — fixed by Task 2
-    def test_save_creates_missing_data_dir(self):
+    def test_save_creates_missing_data_dir(self):  # D1 — fixed by Task 2
         nested = os.path.join(self._tmp.name, "data", "memory.json")
         with mock.patch.object(memory, "MEMORY_FILE", nested):
             memory.save_message("user", "hello")
