@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>NeuraXAi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <h1>NeuraXAi</h1>
+  </header>
+
+
+  <!-- Chat Area -->
+  <main class="chat-container">
+    <div id="chat-box" class="chat-box">
+      <!-- Messages render here -->
+    </div>
+  </main>
+
+  <!-- Input Area -->
+  <footer class="input-area">
+
+    <!-- Multiline textarea -->
+    <textarea
+      id="message-input"
+      placeholder="Send a message…"
+      rows="1"
+      autocomplete="off"
+      spellcheck="false"
+    ></textarea>
+
+    <!-- Send / Stop button -->
+    <button
+      id="send-btn"
+      title="Send / Stop"
+      aria-label="Send message"
+    >
+      ➤
+    </button>
+
+  </footer>
+
+  <!-- JS -->
+  <script src="/static/app.js"></script>
+</body>
+</html>

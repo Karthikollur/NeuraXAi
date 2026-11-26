@@ -1,0 +1,35 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Private memory
+data/memory.json
+data/memory.json.*
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# IDE settings
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Testing cache
+.pytest_cache/
+.coverage
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Archives
+*.zip
