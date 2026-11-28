@@ -4,10 +4,10 @@ import tempfile
 import threading
 import time
 
-# Anchored to the project root, not the cwd (D1).
-MEMORY_FILE = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "memory.json"
-)
+from core import config
+
+
+MEMORY_FILE = os.path.join(config.DATA_DIR, "memory.json")
 
 # ponytail: one process-wide lock around every read-modify-write (D6).
 # Fine for the single-process Flask server; Stage 5 replaces this with SQLite.

@@ -1,21 +1,22 @@
-import requests
 import json
 
-OLLAMA_URL = "http://localhost:11434/api/generate"
-MODEL = "phi3:mini"
+import requests
+
+from core import config
+
 
 def ask_llm_stream(prompt):
     payload = {
-        "model": MODEL,
+        "model": config.MODEL,
         "prompt": prompt,
         "stream": True,
         "options": {
-            "temperature": 0.7
+            "temperature": config.TEMPERATURE
         }
     }
 
     response = requests.post(
-        OLLAMA_URL,
+        f"{config.OLLAMA_URL.rstrip('/')}/api/generate",
         json=payload,
         stream=True
     )
@@ -25,4 +26,4 @@ def ask_llm_stream(prompt):
             data = json.loads(line.decode("utf-8"))
             if "response" in data:
                 yield data["response"]
-    
+
