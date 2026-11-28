@@ -1,14 +1,27 @@
 const chatBox = document.getElementById("chat-box");
 const input = document.getElementById("message-input");
 const sendBtn = document.getElementById("send-btn");
+const memoryToggle = document.getElementById("memory-toggle");
+const memoryKey = "neuraxai.memory";
+
+try {
+  memoryToggle.checked = localStorage.getItem(memoryKey) !== "false";
+} catch {
+  // Keep the HTML default when storage is unavailable.
+}
+
+memoryToggle.addEventListener("change", () => {
+  try {
+    localStorage.setItem(memoryKey, String(memoryToggle.checked));
+  } catch {
+    // The checkbox still controls requests on this page.
+  }
+});
 
 /* ---------- Global state ---------- */
 let controller = null;
 let isGenerating = false;
 let shouldAutoScroll = true;
-
-/* Memory toggle (default ON) */
-let memoryEnabled = true;
 
 /* ---------- Detect manual scroll ---------- */
 chatBox.addEventListener("scroll", () => {
@@ -141,7 +154,7 @@ async function sendMessage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         message: msg,
-        memory: memoryEnabled
+        memory: memoryToggle.checked
       }),
       signal: controller.signal
     });
