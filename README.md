@@ -280,16 +280,24 @@ python app.py
 
 Open <http://127.0.0.1:5000> in a browser. Keep the Flask terminal and Ollama service running. Press `Ctrl+C` in the Flask terminal to stop the application.
 
-### 5. Optional model configuration (v0.4.0)
+### 5. Optional model and runtime configuration
 
-Set `NEURAXAI_MODEL` to an installed Ollama model tag before starting Flask. Example using the default model:
+Set environment variables before starting Flask. NeuraXAi reads them at startup and logs a warning when an invalid value falls back to its default.
+
+| Variable | Default | Meaning |
+|---|---|---|
+| `NEURAXAI_MODEL` | `phi3:mini` | Installed Ollama model tag |
+| `NEURAXAI_OLLAMA_URL` | `http://localhost:11434` | Base URL for Ollama |
+| `NEURAXAI_CONNECT_TIMEOUT` | `3.0` | Positive connection timeout in seconds, used starting in Task 6 |
+| `NEURAXAI_READ_TIMEOUT` | `120.0` | Positive read timeout in seconds, used starting in Task 6 |
+| `NEURAXAI_TEMPERATURE` | `0.7` | Sampling temperature from 0 to 2 inclusive |
+| `NEURAXAI_MAX_MESSAGE_CHARS` | `4000` | Positive message length limit in characters, used starting in Task 7 |
+| `NEURAXAI_DEBUG` | `False` | Flask debug flag, used starting in Task 7. Accepts `1`, `true`, or `yes` for ON and `0`, `false`, or `no` for OFF |
+| `NEURAXAI_DATA_DIR` | `<project root>/data` | Directory for memory storage. Relative paths resolve against the project root |
 
 ```powershell
-$env:NEURAXAI_MODEL = "phi3:mini"
-python app.py
+$env:NEURAXAI_MODEL = "qwen3.5:4b"; python app.py
 ```
-
-On Linux/macOS: `NEURAXAI_MODEL=phi3:mini python app.py`.
 
 ## Upgrade from v0.3.0
 
