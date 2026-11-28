@@ -50,17 +50,18 @@ Completion condition (team roadmap): existing features work, memory-OFF tests pa
 **Files likely touched:** `core/memory.py`, `tests/test_memory.py`, `tests/test_baseline.py`
 **Estimated scope:** Small (3 files)
 
-### [ ] Task 3: Memory toggle works end to end (D3)
+### [x] Task 3: Memory toggle works end to end (D3)
 **Description:** Every memory read and write in `/chat` honours the `memory` flag, and the UI exposes it as a switch. Memory OFF means: no history in the prompt, no saved-name lookup, no writes. It does not delete stored data.
 **Acceptance criteria:**
-- [ ] With `memory:false`, "what is my name" does not return the stored name and nothing is written to disk.
-- [ ] With `memory:true`, the stored name is returned and the turn is saved.
-- [ ] The page has a "Memory" switch (default ON, persisted in `localStorage`) sent as `memory` in every `/chat` request.
-- [ ] Non-boolean `memory` values are rejected (the 400 response is wired in Task 7; the type check lives here).
-- [ ] D3 expected-failure test passes and is un-marked.
+- [x] With `memory:false`, "what is my name" does not return the stored name and nothing is written to disk.
+- [x] With `memory:true`, the stored name is returned and the turn is saved.
+- [x] The page has a "Memory" switch (default ON, persisted in `localStorage`) sent as `memory` in every `/chat` request.
+- [x] Non-boolean `memory` values are rejected (the 400 response is wired in Task 7; the type check lives here).
+- [x] D3 expected-failure test passes and is un-marked.
 **Verification:**
-- [ ] Tests pass: `python -m unittest tests.test_memory_toggle -v` (assert file contents unchanged when off).
-- [ ] Manual: set name with memory ON, switch OFF, ask name → "I don't know."; switch ON → name returned.
+- [x] Tests pass: `python -m unittest tests.test_memory_toggle -v` (assert file contents unchanged when off).
+- [x] Manual: set name with memory ON, switch OFF, ask name → "I don't know."; switch ON → name returned.
+**Review:** PR #3. Browser check run on the real app; model replies not checked against live Ollama.
 **Dependencies:** Task 2
 **Files likely touched:** `app.py`, `web/templates/index.html`, `web/static/app.js`, `web/static/style.css`, `tests/test_memory_toggle.py`
 **Estimated scope:** Medium (5 files)

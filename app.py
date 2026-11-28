@@ -1,5 +1,5 @@
 from core.prompt import SYSTEM_PROMPT
-from flask import Flask, render_template, request, Response
+from flask import Flask, jsonify, render_template, request, Response
 import re
 
 from core.llm import ask_llm_stream
@@ -32,8 +32,11 @@ def index():
 def chat():
     data = request.json or {}
 
-    user_msg = data.get("message", "").strip()
     memory_on = data.get("memory", True)
+    if not isinstance(memory_on, bool):
+        return jsonify(error="memory must be true or false"), 400
+
+    user_msg = data.get("message", "").strip()
     user_lower = user_msg.lower()
 
     if not user_msg:
@@ -72,8 +75,11 @@ def chat():
 
     # Answer name from memory (NO LLM)
     if "what is my name" in user_lower:
-        name = get_user_name()
+        name = get_user_name() if memory_on else None
         reply = name if name else "I don't know."
+        if memory_on:
+            save_message("user", user_msg)
+            save_message("assistant", reply)
         return Response(reply, mimetype="text/plain")
 
     # Format rules
