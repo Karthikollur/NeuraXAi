@@ -129,7 +129,7 @@ Completion condition (team roadmap): existing features work, memory-OFF tests pa
 - [x] `app.py` imports from `core.language`; the old regex is removed.
 **Verification:**
 - [x] Tests pass: `python -m unittest tests.test_language -v` (≥15 table cases incl. the README example prompts).
-**Review:** PR #4. Probe on unseen text: 3/18 English sentences misread (all two-name cases like "Mari and Ela"), 4/15 Roman Telugu missed (missing `emi` and verb forms like `cheyali`, `chestunnav`). Misses fall back to English, same as before.
+**Review:** PR #4, re-reviewed after `d0fd85b` (added `emi` and 13 verb forms). Probe on unseen text: 1/15 Roman Telugu missed ("chala thanks", English by design); 3/23 English misread, all two-name cases like "Mari and Ela" (known limitation); EMI sentences stay English.
 **Dependencies:** Task 1
 **Files likely touched:** `core/language.py`, `app.py`, `tests/test_language.py`
 **Estimated scope:** Small (3 files)
