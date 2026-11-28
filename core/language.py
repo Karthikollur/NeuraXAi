@@ -7,15 +7,17 @@ Returns ``"telugu"`` or ``"english"``:
    - Unambiguous keywords (``UNAMBIGUOUS_ROMAN_TELUGU_WORDS``):
      ``avunu``, ``baagundi``, ``baagunnanu``, ``baagunnara``, ``bagundi``,
      ``bagunnanu``, ``bagunnara``, ``chaala``, ``cheppandi``, ``cheppu``,
-     ``ekkada``, ``elaaga``, ``emiti``, ``enduku``, ``enti``, ``eppudu``,
-     ``evaru``, ``kaadu``, ``kaavali``, ``kavali``, ``ledu``, ``manam``,
-     ``manamu``, ``meeru``, ``miru``, ``naaku``, ``naku``, ``namaskaram``,
-     ``nenu``, ``telugulo``, ``undi``, ``unna``, ``unnaru``, ``unnav``,
-     ``vaddu``.
+     ``chesthunnaru``, ``chesthunnav``, ``chestundi``, ``chestunnaru``,
+     ``chestunnav``, ``cheyali``, ``cheyyali``, ``cheyyi``, ``chudu``,
+     ``chupinchu``, ``ekkada``, ``elaaga``, ``emiti``, ``enduku``, ``enti``,
+     ``eppudu``, ``evaru``, ``kaadu``, ``kaavali``, ``kavali``, ``ledu``,
+     ``manam``, ``manamu``, ``meeru``, ``miru``, ``naaku``, ``naku``,
+     ``namaskaram``, ``nenu``, ``raayali``, ``rayali``, ``telugulo``,
+     ``undi``, ``unna``, ``unnaru``, ``unnav``, ``unnavu``, ``vaddu``.
    - Ambiguous keywords (also valid English words, names, or abbreviations;
      ``AMBIGUOUS_ROMAN_TELUGU_WORDS``):
-     ``adi``, ``ani``, ``ante``, ``chala``, ``ela``, ``em``, ``ga``,
-     ``idi``, ``lo``, ``mari``, ``mee``, ``naa``, ``oka``, ``peru``.
+     ``adi``, ``ani``, ``ante``, ``chala``, ``ela``, ``em``, ``emi``,
+     ``ga``, ``idi``, ``lo``, ``mari``, ``mee``, ``naa``, ``oka``, ``peru``.
 
 Threshold rule:
 - At least 1 distinct unambiguous Roman Telugu keyword, OR at least 2 distinct
@@ -40,6 +42,16 @@ UNAMBIGUOUS_ROMAN_TELUGU_WORDS = frozenset({
     "chaala",
     "cheppandi",
     "cheppu",
+    "chesthunnaru",
+    "chesthunnav",
+    "chestundi",
+    "chestunnaru",
+    "chestunnav",
+    "cheyali",
+    "cheyyali",
+    "cheyyi",
+    "chudu",
+    "chupinchu",
     "ekkada",
     "elaaga",
     "emiti",
@@ -59,11 +71,14 @@ UNAMBIGUOUS_ROMAN_TELUGU_WORDS = frozenset({
     "naku",
     "namaskaram",
     "nenu",
+    "raayali",
+    "rayali",
     "telugulo",
     "undi",
     "unna",
     "unnaru",
     "unnav",
+    "unnavu",
     "vaddu",
 })
 
@@ -74,6 +89,7 @@ AMBIGUOUS_ROMAN_TELUGU_WORDS = frozenset({
     "chala",
     "ela",
     "em",
+    "emi",
     "ga",
     "idi",
     "lo",
