@@ -19,10 +19,10 @@ Sizes: XS 1 file · S 1–2 · M 3–5 · L 5–8 (split further).
 Completion condition (team roadmap): existing features work, memory-OFF tests pass, and the app doesn't crash when Ollama is offline.
 
 ### [ ] Task 1: Reproducible baseline, characterization tests, CI
-**Status:** reviewed (PR #2). Open: one real chat turn (blocked until Task 5 makes the model configurable; `phi3:mini` isn't installed on the review machine) and a green CI run on GitHub.
+**Status:** reviewed (PR #2). Real chat turn verified during the Task 5 review (`NEURAXAI_MODEL=qwen3.5:4b`, `/chat` → 200 with a model reply). Open: a green CI run on GitHub.
 **Description:** Get v0.3.0 running, pin dependencies, and add a test harness that locks in current behaviour (known bugs marked as expected failures) so later refactors are safe.
 **Acceptance criteria:**
-- [ ] Fresh clone + `python -m venv .venv` + `pip install -r requirements.txt` + `python app.py` serves the page and answers one real chat turn.
+- [x] Fresh clone + `python -m venv .venv` + `pip install -r requirements.txt` + `python app.py` serves the page and answers one real chat turn.
 - [x] `tests/` has Flask test-client tests for `GET /` (200) and the "hi" shortcut (reply text, no Ollama call).
 - [x] Known bugs D1, D2, D3 each have a test marked `@unittest.expectedFailure` naming the task that fixes it.
 - [x] `requirements.txt` pins compatible ranges (`flask>=3.0,<4`, `requests>=2.31,<3`).
@@ -50,17 +50,18 @@ Completion condition (team roadmap): existing features work, memory-OFF tests pa
 **Files likely touched:** `core/memory.py`, `tests/test_memory.py`, `tests/test_baseline.py`
 **Estimated scope:** Small (3 files)
 
-### [ ] Task 3: Memory toggle works end to end (D3)
+### [x] Task 3: Memory toggle works end to end (D3)
 **Description:** Every memory read and write in `/chat` honours the `memory` flag, and the UI exposes it as a switch. Memory OFF means: no history in the prompt, no saved-name lookup, no writes. It does not delete stored data.
 **Acceptance criteria:**
-- [ ] With `memory:false`, "what is my name" does not return the stored name and nothing is written to disk.
-- [ ] With `memory:true`, the stored name is returned and the turn is saved.
-- [ ] The page has a "Memory" switch (default ON, persisted in `localStorage`) sent as `memory` in every `/chat` request.
-- [ ] Non-boolean `memory` values are rejected (the 400 response is wired in Task 7; the type check lives here).
-- [ ] D3 expected-failure test passes and is un-marked.
+- [x] With `memory:false`, "what is my name" does not return the stored name and nothing is written to disk.
+- [x] With `memory:true`, the stored name is returned and the turn is saved.
+- [x] The page has a "Memory" switch (default ON, persisted in `localStorage`) sent as `memory` in every `/chat` request.
+- [x] Non-boolean `memory` values are rejected (the 400 response is wired in Task 7; the type check lives here).
+- [x] D3 expected-failure test passes and is un-marked.
 **Verification:**
-- [ ] Tests pass: `python -m unittest tests.test_memory_toggle -v` (assert file contents unchanged when off).
-- [ ] Manual: set name with memory ON, switch OFF, ask name → "I don't know."; switch ON → name returned.
+- [x] Tests pass: `python -m unittest tests.test_memory_toggle -v` (assert file contents unchanged when off).
+- [x] Manual: set name with memory ON, switch OFF, ask name → "I don't know."; switch ON → name returned.
+**Review:** PR #3. Browser check run on the real app; model replies not checked against live Ollama.
 **Dependencies:** Task 2
 **Files likely touched:** `app.py`, `web/templates/index.html`, `web/static/app.js`, `web/static/style.css`, `tests/test_memory_toggle.py`
 **Estimated scope:** Medium (5 files)
@@ -81,15 +82,16 @@ Completion condition (team roadmap): existing features work, memory-OFF tests pa
 **Estimated scope:** Small (3 files)
 
 ### [ ] Task 5: Config module for model and runtime settings
+**Status:** reviewed. Timeouts, max message length and debug are defined but not wired yet; Tasks 6 and 7 use them.
 **Description:** Move hard-coded settings into `core/config.py`, read from environment variables with safe defaults: `NEURAXAI_MODEL` (default `phi3:mini`), `OLLAMA_URL`, connect/read timeouts, temperature, max message length, `NEURAXAI_DEBUG`, data directory. Other modules import from it instead of defining constants.
 **Acceptance criteria:**
-- [ ] No module other than `core/config.py` contains the model name, Ollama URL or data path as a literal.
-- [ ] Invalid values (e.g. non-numeric timeout) fall back to the default with a logged warning, not a crash.
-- [ ] Tests can override settings without touching environment variables globally (e.g. a `Settings` object or patchable attributes).
-- [ ] README documents every variable.
+- [x] No module other than `core/config.py` contains the model name, Ollama URL or data path as a literal.
+- [x] Invalid values (e.g. non-numeric timeout) fall back to the default with a logged warning, not a crash.
+- [x] Tests can override settings without touching environment variables globally (e.g. a `Settings` object or patchable attributes).
+- [x] README documents every variable.
 **Verification:**
-- [ ] Tests pass: `python -m unittest tests.test_config -v`
-- [ ] Manual: `$env:NEURAXAI_MODEL = "qwen3.5:4b"; python app.py` uses that model.
+- [x] Tests pass: `python -m unittest tests.test_config -v`
+- [x] Manual: `$env:NEURAXAI_MODEL = "qwen3.5:4b"; python app.py` uses that model.
 **Dependencies:** Task 1
 **Files likely touched:** `core/config.py`, `core/llm.py`, `core/memory.py`, `tests/test_config.py`, `README.md`
 **Estimated scope:** Medium (5 files)

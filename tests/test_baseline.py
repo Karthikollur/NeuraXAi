@@ -79,7 +79,6 @@ class TestKnownBugs(BaselineTestCase):
         self.chat("I am a student")
         self.assertEqual(memory.get_user_name(), "Alex Kumar")
 
-    @unittest.expectedFailure  # D3 — fixed by Task 3
     def test_memory_off_hides_stored_name(self):
         memory.save_user_name("Alex")
         _, body = self.chat("what is my name", memory_on=False)
