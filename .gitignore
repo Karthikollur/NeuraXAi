@@ -8,8 +8,7 @@ venv/
 env/
 
 # Private memory
-data/memory.json
-data/memory.json.*
+data/
 
 # Environment variables
 .env
