@@ -19,33 +19,33 @@ Sizes: XS 1 file · S 1–2 · M 3–5 · L 5–8 (split further).
 Completion condition (team roadmap): existing features work, memory-OFF tests pass, and the app doesn't crash when Ollama is offline.
 
 ### [ ] Task 1: Reproducible baseline, characterization tests, CI
-**Status:** implemented on branch `rebuild/v0.4.0` (8 tests, 3 expected failures for D1–D3; CI workflow written). Not yet on `main`; the real chat turn and a green CI run on GitHub are still open.
+**Status:** reviewed (PR #2). Open: one real chat turn (blocked until Task 5 makes the model configurable; `phi3:mini` isn't installed on the review machine) and a green CI run on GitHub.
 **Description:** Get v0.3.0 running, pin dependencies, and add a test harness that locks in current behaviour (known bugs marked as expected failures) so later refactors are safe.
 **Acceptance criteria:**
 - [ ] Fresh clone + `python -m venv .venv` + `pip install -r requirements.txt` + `python app.py` serves the page and answers one real chat turn.
-- [ ] `tests/` has Flask test-client tests for `GET /` (200) and the "hi" shortcut (reply text, no Ollama call).
-- [ ] Known bugs D1, D2, D3 each have a test marked `@unittest.expectedFailure` naming the task that fixes it.
-- [ ] `requirements.txt` pins compatible ranges (`flask>=3.0,<4`, `requests>=2.31,<3`).
+- [x] `tests/` has Flask test-client tests for `GET /` (200) and the "hi" shortcut (reply text, no Ollama call).
+- [x] Known bugs D1, D2, D3 each have a test marked `@unittest.expectedFailure` naming the task that fixes it.
+- [x] `requirements.txt` pins compatible ranges (`flask>=3.0,<4`, `requests>=2.31,<3`).
 - [ ] GitHub Actions runs the unittest command on push/PR (Ubuntu + Windows, Python 3.10 + 3.12).
 **Verification:**
-- [ ] Tests pass: `python -m unittest discover -s tests -v` (expected failures reported as such, not errors).
-- [ ] Build succeeds: `python -c "import app"`.
+- [x] Tests pass: `python -m unittest discover -s tests -v` (expected failures reported as such, not errors).
+- [x] Build succeeds: `python -c "import app"`.
 - [ ] Manual: CI run on GitHub is green.
 **Dependencies:** None
 **Files likely touched:** `requirements.txt`, `tests/__init__.py`, `tests/test_baseline.py`, `.github/workflows/ci.yml`
 **Estimated scope:** Small–Medium (4 files)
 
-### [ ] Task 2: Storage that cannot lose or corrupt memory (D1, D6)
+### [x] Task 2: Storage that cannot lose or corrupt memory (D1, D6)
 **Description:** Make `core/memory.py` safe: path anchored to the project (not cwd), auto-create `data/`, validate structure, serialize access with a lock, write atomically, and back up an unreadable file instead of silently replacing it. Keep it lean: Stage 5 replaces this storage with SQLite.
 **Acceptance criteria:**
-- [ ] Saving on a fresh clone (no `data/`) succeeds, and the file is created next to the project regardless of cwd.
-- [ ] Two threads calling `save_message` 100 times each yield exactly 200 history entries.
-- [ ] A corrupt `memory.json` is renamed to `memory.json.corrupt-<timestamp>` and a fresh structure is used; the original bytes are preserved.
-- [ ] Writes use temp file + `os.replace`; a simulated exception between write and replace leaves the old file intact.
-- [ ] D1 expected-failure test passes and its decorator is removed.
+- [x] Saving on a fresh clone (no `data/`) succeeds, and the file is created next to the project regardless of cwd.
+- [x] Two threads calling `save_message` 100 times each yield exactly 200 history entries.
+- [x] A corrupt `memory.json` is renamed to `memory.json.corrupt-<timestamp>` and a fresh structure is used; the original bytes are preserved.
+- [x] Writes use temp file + `os.replace`; a simulated exception between write and replace leaves the old file intact.
+- [x] D1 expected-failure test passes and its decorator is removed.
 **Verification:**
-- [ ] Tests pass: `python -m unittest tests.test_memory -v`
-- [ ] Manual: delete `data/`, send a message, restart the app, confirm history is still used.
+- [x] Tests pass: `python -m unittest tests.test_memory -v`
+- [x] Manual: delete `data/`, send a message, restart the app, confirm history is still used. (Reviewed via two separate processes started outside the repo; app-level check repeats at Checkpoint A.)
 **Dependencies:** Task 1
 **Files likely touched:** `core/memory.py`, `tests/test_memory.py`, `tests/test_baseline.py`
 **Estimated scope:** Small (3 files)
